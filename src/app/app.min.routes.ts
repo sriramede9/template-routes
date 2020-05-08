@@ -14,6 +14,8 @@ import { Routes, RouterModule } from "@angular/router";
 import { ErrorPageComponent } from "./error-page/error-page.component";
 import { AuthGuard } from "./app.authguard";
 import { CanDeactivateGuard } from "./servers/edit-server/can_deactivate_gaurd_service";
+import { GenericErrorPageComponent } from "./generic-error-page/generic-error-page.component";
+import { ServerResolver } from "./servers/server/server_resolver_service";
 
 const appRoutes: Routes = [
   { path: "", component: HomeComponent },
@@ -22,7 +24,11 @@ const appRoutes: Routes = [
     component: ServersComponent,
     canActivateChild: [AuthGuard],
     children: [
-      { path: ":id", component: ServerComponent },
+      {
+        path: ":id",
+        component: ServerComponent,
+        resolve: { server: ServerResolver },
+      },
       {
         path: ":id/edit",
         component: EditServerComponent,
@@ -36,7 +42,12 @@ const appRoutes: Routes = [
     component: UsersComponent,
     children: [{ path: ":id/:name", component: UserComponent }],
   },
-  { path: "not-found", component: ErrorPageComponent },
+  // { path: "not-found", component: ErrorPageComponent },
+  {
+    path: "not-found",
+    component: GenericErrorPageComponent,
+    data: { message: "No such Page go to home" },
+  },
   { path: "**", redirectTo: "/not-found" },
 ];
 
