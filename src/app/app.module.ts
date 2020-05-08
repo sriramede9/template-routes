@@ -12,6 +12,8 @@ import { ServerComponent } from "./servers/server/server.component";
 import { ServersService } from "./servers/servers.service";
 import { ErrorPageComponent } from "./error-page/error-page.component";
 import { RoutesModule } from "./app.min.routes";
+import { AuthService } from "./app.authservice";
+import { AuthGuard } from "./app.authguard";
 
 @NgModule({
   declarations: [
@@ -25,7 +27,7 @@ import { RoutesModule } from "./app.min.routes";
     ErrorPageComponent,
   ],
   imports: [BrowserModule, FormsModule, RoutesModule],
-  providers: [ServersService],
+  providers: [ServersService, AuthService, AuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

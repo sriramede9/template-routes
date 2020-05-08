@@ -12,12 +12,14 @@ import { ServerComponent } from "./servers/server/server.component";
 import { ServersService } from "./servers/servers.service";
 import { Routes, RouterModule } from "@angular/router";
 import { ErrorPageComponent } from "./error-page/error-page.component";
+import { AuthGuard } from "./app.authguard";
 
 const appRoutes: Routes = [
   { path: "", component: HomeComponent },
   {
     path: "servers",
     component: ServersComponent,
+    canActivateChild: [AuthGuard],
     children: [
       { path: ":id", component: ServerComponent },
       { path: ":id/edit", component: EditServerComponent },
@@ -35,6 +37,7 @@ const appRoutes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(appRoutes)],
+
   exports: [RouterModule],
 })
 export class RoutesModule {}
